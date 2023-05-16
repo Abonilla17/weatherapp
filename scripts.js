@@ -43,13 +43,18 @@ function getWeather(latitude, longitude) {
       fetch(weatherAlerts)
         .then(response => response.json())
         .then(alertData => {
-          alerts.innerHTML = `There are currently no active weather alerts as of ${alertData.updated}`;
+          const alertTime = alertData.updated;
+          console.log(alertTime);
+          const correctTime = new Date(alertTime);
+          const readableDateTime = correctTime.toISOString();
+          console.log(readableDateTime);
+          alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
           
           if(alertData.features.length > 0 && alertData.features[0].properties.headline != undefined) {
             alerts.innerHTML = alertData.features[0].properties.headline;
             alert(`${alertData.features[0].properties.headline}`);
           } else {
-            alerts.innerHTML = `There are currently no active weather alerts as of ${alertData.updated}`;
+            alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
           }
         });
         
