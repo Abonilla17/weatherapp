@@ -44,19 +44,26 @@ function getWeather(latitude, longitude) {
       fetch(weatherAlerts)
         .then(response => response.json())
         .then(alertData => {
+          console.log(alertData);
           const alertTime = alertData.updated;
           console.log(alertTime);
           const correctTime = new Date(alertTime);
           const readableDateTime = correctTime.toISOString();
           console.log(readableDateTime);
           alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
-          
+          console.log(alertData.features.length);
           if(alertData.features.length > 0 && alertData.features[0].properties.headline != undefined) {
-            alerts.innerHTML = alertData.features[0].properties.headline;
-            alert(`${alertData.features[0].properties.headline}`);
-          } else {
-            alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
-          }
+            if (alertData.features.length > 0) {
+              alerts.innerHTML = ''; // Clear any existing content before appending new alerts
+            
+              for (let i = 0; i < alertData.features.length; i++) {
+                const activeAlerts = alertData.features[i].properties.headline;
+                alerts.innerHTML += activeAlerts + `<br>`;
+              }
+            } else {
+              alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
+            }
+          }            
         });
         
       fetch(data.properties.forecast)
@@ -80,8 +87,14 @@ function getWeather(latitude, longitude) {
           console.log(data2.properties.periods[0].isDaytime);
           winds.innerHTML = `The forecasted wind speed is ${data2.properties.periods[0].windSpeed} going in the ${data2.properties.periods[0].windDirection} direction `;
           temperature.innerHTML = `${data2.properties.periods[0].temperature} ${data2.properties.periods[0].temperatureUnit}` ;
-          rainChance.innerHTML = ` There is a ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
-        });
+          if(data2.properties.periods[0].probabilityOfPrecipitation.value != null)
+          {
+            rainChance.innerHTML = ` There is a ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
+          }
+          else{
+            rainChance.innerHTML = `There is a 0% chance of rain`;
+          }
+         });
     })
     .catch(error => console.log(error));
 }
