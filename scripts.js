@@ -28,13 +28,14 @@ function getWeather(latitude, longitude) {
   const temperature = document.getElementById(`temperature`);
   const winds = document.getElementById(`winds`);
   const rainChance = document.getElementById(`rainChance`);
-  const icon = document.getElementById(`icon`);
+  const icon = document.getElementById(`weatherIcon`);
   let iconImage = "";
   const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   
   fetch(weatherdata)
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       city.innerHTML = ` City = ${data.properties.relativeLocation.properties.city}`;
       state.innerHTML = ` State = ${data.properties.relativeLocation.properties.state}`;
       
@@ -61,19 +62,22 @@ function getWeather(latitude, longitude) {
       fetch(data.properties.forecast)
         .then(response => response.json())
         .then(data2 => {
+          console.log(data2);
+          console.log(data2.properties.periods[0].probabilityOfPrecipitation.value);
+           const isDaytime = data2.properties.periods[0].isDaytime;
           switch (`${data2.properties.periods[0].probabilityOfPrecipitation.value}`) {
             case "0":
-               iconImage = "clearskies.jpg";
-              break;
-            case (value) => value > 0:
-               iconImage = "rainy.jpg";
+              icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
               break;
             default:
-              iconImage = "rainy.jpg";
+              if (parseInt(data2.properties.periods[0].probabilityOfPrecipitation.value) > 0) {
+                icon.className = isDaytime ? `wi wi-day-sprinkle` : `wi wi-night-showers`;
+              } else {
+                icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
+              }
               break;
-          }
-          console.log(iconImage);
-          document.getElementById("icon").src=iconImage;
+          }  
+          console.log(data2.properties.periods[0].isDaytime);
           winds.innerHTML = `The forecasted wind speed is ${data2.properties.periods[0].windSpeed} going in the ${data2.properties.periods[0].windDirection} direction `;
           temperature.innerHTML = `${data2.properties.periods[0].temperature} ${data2.properties.periods[0].temperatureUnit}` ;
           rainChance.innerHTML = ` There is a ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
