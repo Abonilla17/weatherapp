@@ -17,47 +17,31 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <!-- <h1> Weather App</h1> -->
-        <div class="buttons">
-        </div>
-        <br>
         <h1 style="text-align: center;"> Active Weather Alerts: </h1>
         <div id="weatherAlerts">
 
         </div>
         <div class="weatherContainer">
-  
-            <p id="city">
-
-            </p>
-            <p id="state">
-    
-            </p>
-
-        <!-- <div id="locationData">
-
-        </div> -->
-        <div class="iconContainer">
-            <div class="icon">
-    </div>
-
-        </div>
-        <div class="temperature">
-            <div class="iconDiv">
-                <i id="weatherIcon"></i> 
+            <p id="city"></p>
+            <p id="state"></p>
+            <div class="temperature">
+                <div class="iconDiv">
+                  <i id="weatherIcon"></i> 
+                </div>
+                <div class="temperatureDIv">
+                    <p id="temperature"> </p>  
+                     <p id="shortForecast" style="font-size: 1.5rem;"></p>  
+                </div>
+              <div class="windRainContainer">
+                <div class="windDIv">
+                    <p id="winds"> </p>
+                </div>
+                <div class="rainChanceDiv">
+                    <p id="rainChance"> </p>
+                </div>
             </div>
-            <p id="temperature">      
-            </p> 
-        </div>
-        
- 
-        <p id="winds">
-            
-        </p>
-        <p id="rainChance">
-            
-        </p>
-        </div>
+       
+       
         <script src="scripts.js" async defer></script>
     </body>
 </html>

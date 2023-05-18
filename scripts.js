@@ -29,6 +29,7 @@ function getWeather(latitude, longitude) {
   const winds = document.getElementById(`winds`);
   const rainChance = document.getElementById(`rainChance`);
   const icon = document.getElementById(`weatherIcon`);
+  const shortForecast = document.getElementById(`shortForecast`);
   let iconImage = "";
   const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   
@@ -85,14 +86,15 @@ function getWeather(latitude, longitude) {
               break;
           }  
           console.log(data2.properties.periods[0].isDaytime);
-          winds.innerHTML = `The forecasted wind speed is ${data2.properties.periods[0].windSpeed} going in the ${data2.properties.periods[0].windDirection} direction `;
-          temperature.innerHTML = `${data2.properties.periods[0].temperature} ${data2.properties.periods[0].temperatureUnit}` ;
+          winds.innerHTML = `Winds: ${data2.properties.periods[0].windSpeed} going ${data2.properties.periods[0].windDirection} `;
+          temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
+          shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
           if(data2.properties.periods[0].probabilityOfPrecipitation.value != null)
           {
-            rainChance.innerHTML = ` There is a ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
+            rainChance.innerHTML = `Chance of rain: ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
           }
           else{
-            rainChance.innerHTML = `There is a 0% chance of rain`;
+            rainChance.innerHTML = `Chance of rain:  0% chance of rain`;
           }
          });
     })
