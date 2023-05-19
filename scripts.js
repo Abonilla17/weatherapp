@@ -30,6 +30,8 @@ function getWeather(latitude, longitude) {
   const rainChance = document.getElementById(`rainChance`);
   const icon = document.getElementById(`weatherIcon`);
   const shortForecast = document.getElementById(`shortForecast`);
+  const weatherValidTime = document.getElementById(`weatherValidTime`);
+  const forecastFor = document.getElementById(`weatherFor`);
   let iconImage = "";
   const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   
@@ -86,9 +88,16 @@ function getWeather(latitude, longitude) {
               break;
           }  
           console.log(data2.properties.periods[0].isDaytime);
+          const dateString = `${data2.properties.periods[0].endTime}`;
+          const date = new Date(dateString);
+          const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            const formattedDate = date.toLocaleString(undefined, options);
+            console.log(formattedDate);
+          weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
           winds.innerHTML = `Winds: ${data2.properties.periods[0].windSpeed} going ${data2.properties.periods[0].windDirection} `;
           temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
           shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
+          forecastFor.innerHTML = `${data2.properties.periods[0].name}'s forecast`;
           if(data2.properties.periods[0].probabilityOfPrecipitation.value != null)
           {
             rainChance.innerHTML = `Chance of rain: ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;

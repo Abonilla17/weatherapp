@@ -5,6 +5,9 @@ html{
     line-height: 1.5;
     font-family: 'Roboto', sans-serif;
 }
+.centered{
+    text-align: center;
+}
 h1{
     font-weight: bolder;
     text-align: center;
@@ -43,9 +46,9 @@ p{
     font-size: 2.5rem;
     padding-right: 50px;
   }
-  .shortForecast {
+  #shortForecast {
     text-align: center;
-    font-size: 15px;
+    font-size: 1.5rem;
   }
   #temperature {
     font-weight: bold;
@@ -62,9 +65,12 @@ p{
 .windRainContainer{
     font-size: 30px;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
     .temperature {
         display: block;
+    }
+    #shortForecast{
+        font-size: .5rem;
     }
     .iconDiv{
         margin: 0;
@@ -78,10 +84,23 @@ p{
     #temperature{
         font-size: 1.5rem;
         text-align: center;
-        
     }
-      .shortForecast {
+    .windRainContainer{
+        line-height: .5;
+    }
+    .windDIv{
+        font-size: 10px;;
+    }
+    .rainChanceDiv{
+        font-size: 10px;
+    }
+    #weatherAlerts{
+        font-size: 10px;
+    }
+    .alertTitle{
         font-size: 1rem;
-        text-align: center;
-      }
+    }
+    p{
+        font-size: 10px;
+    }
   }
