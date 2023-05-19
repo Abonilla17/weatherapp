@@ -17,10 +17,16 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <h1 class="centered alertTitle"> Active Weather Alerts: </h1>
+        <label class="useDaily">
+            <input type="checkbox" name="checkbox" id="useDaily" />
+            Use Daily forecast 
+          </label>
+          <button onclick="getLocation();"> Get Weather</button>
+        <h1 class="centered alertTitle hidden" id="alertTitle" > Active Weather Alerts: </h1>
         <div id="weatherAlerts">
         </div>
         <div class="weatherContainer">
+            <p id="observationInformation"></p>
             <p id="city"></p>
             <p id="state"></p>
             <p id="weatherFor"></p>
