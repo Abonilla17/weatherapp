@@ -2,6 +2,7 @@
 let latitude;
 let longitude;
 const alertTitle = document.getElementById("alertTitle");
+const pictureSize = "medium";
 function getLocation(){
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -82,28 +83,30 @@ function getWeather(latitude, longitude) {
           console.log(data2);
           console.log(data2.properties.periods[0].probabilityOfPrecipitation.value);
            const isDaytime = data2.properties.periods[0].isDaytime;
-          switch (`${data2.properties.periods[0].probabilityOfPrecipitation.value}`) {
-            case "0":
-              icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
-              break;
-            default:
-              if (parseInt(data2.properties.periods[0].probabilityOfPrecipitation.value) > 0) {
-                icon.className = isDaytime ? `wi wi-day-sprinkle` : `wi wi-night-showers`;
-              } else {
-                icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
-              }
-              break;
-          }  
+          // switch (`${data2.properties.periods[0].probabilityOfPrecipitation.value}`) {
+          //   case "0":
+          //     icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
+          //     break;
+          //   default:
+          //     if (parseInt(data2.properties.periods[0].probabilityOfPrecipitation.value) > 0) {
+          //       icon.className = isDaytime ? `wi wi-day-sprinkle` : `wi wi-night-showers`;
+          //     } else {
+          //       icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
+          //     }
+          //     break;
+          // }  
           console.log(data2.properties.periods[0].isDaytime);
           const dateString = `${data2.properties.periods[0].endTime}`;
           const date = new Date(dateString);
           const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
             const formattedDate = date.toLocaleString(undefined, options);
             console.log(formattedDate);
+            console.log(data2.properties.periods[0].icon);
           weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
           winds.innerHTML = `Winds: ${data2.properties.periods[0].windSpeed} going ${data2.properties.periods[0].windDirection} `;
           temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
           shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
+          document.getElementById(`weatherImage`).src = `${data2.properties.periods[0].icon}`;
           const dateString2 = `${data2.properties.periods[0].startTime}`;
           const date2 = new Date(dateString2);
           const options2 = {hour: 'numeric', minute: 'numeric'};
@@ -175,25 +178,17 @@ function getHourlyWeather(latitude, longitude) {
         .then(data2 => {
           console.log(data2);
           console.log(data2.properties.periods[0].probabilityOfPrecipitation.value);
-           const isDaytime = data2.properties.periods[0].isDaytime;
-          switch (`${data2.properties.periods[0].probabilityOfPrecipitation.value}`) {
-            case "0":
-              icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
-              break;
-            default:
-              if (parseInt(data2.properties.periods[0].probabilityOfPrecipitation.value) > 0) {
-                icon.className = isDaytime ? `wi wi-day-sprinkle` : `wi wi-night-showers`;
-              } else {
-                icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
-              }
-              break;
-          }  
-          console.log(data2.properties.periods[0].isDaytime);
           const dateString = `${data2.properties.periods[0].endTime}`;
           const date = new Date(dateString);
           const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
             const formattedDate = date.toLocaleString(undefined, options);
             console.log(formattedDate);
+            console.log(data2.properties.periods[0].icon);
+          const link = data2.properties.periods[0].icon;
+            // Change "small" to "medium" in the link
+            let modifiedLink = link.replace("size=small", "size=medium");
+            console.log(modifiedLink);
+          document.getElementById(`weatherImage`).src = modifiedLink;
           weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
           winds.innerHTML = `Winds: ${data2.properties.periods[0].windSpeed} going ${data2.properties.periods[0].windDirection} `;
           temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
@@ -212,6 +207,5 @@ function getHourlyWeather(latitude, longitude) {
             rainChance.innerHTML = `Chance of rain:  0% chance of rain`;
           }
          });
-    })
-    .catch(error => console.log(error));
-}
+        })
+      }
