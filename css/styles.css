@@ -85,6 +85,9 @@ p{
         margin: 0;
         text-align: center;
     }
+    img{
+       width:10vw;
+    }
     .temperatureDIv{
     margin: 0;
       text-align: center;
