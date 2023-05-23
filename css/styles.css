@@ -1,15 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 html{
     margin: 0px;
-    background-color: #626D58;
-    line-height: 1.5;
+    color: white;
+    background-color: #34495E;
+    line-height: 1;
     font-family: 'Roboto', sans-serif;
 }
 .hidden{
     display: none;
 }
 img{
-    width: 5vw;
+    width: 7.5vw;
+    border:solid 1.5px;
+    border-bottom-color:black;
+    border-left-color: black;
+    border-right-color:black;
+    border-top-color:black;
 }
 .iconDiv{
     padding-right: 1%;
@@ -34,15 +40,18 @@ p{
     text-align: center;
 }
 .weatherContainer{
-    background-color: white;
+    background-color: #F39C12;
     color: black;
     margin: 5%;
-    border: 2px solid white;
+    border: 2px solid #F39C12;
 }
 #weatherAlerts{
     text-align: center;
     margin: 2%;
 }
+.hidden-border {
+    border: none;
+  }
 .temperature {
     line-height: 0;
     display: flex;
@@ -52,11 +61,16 @@ p{
   }
   .temperatureDIv{
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 3rem;
     padding-right: 50px;
   }
   #shortForecast {
+    font-weight: normal;
     text-align: center;
+    font-size: 1.5rem;
+  }
+  #feelsLike{
+    font-weight: normal;
     font-size: 1.5rem;
   }
   #temperature {
@@ -66,29 +80,40 @@ p{
     line-height: 0;
 }
 .windDIv{
-    font-size: 15px;;
+    font-size: 1.25rem;;
 }
 .rainChanceDiv{
-    font-size: 15px;
+    font-size: 1.25rem;;
 }
 .windRainContainer{
     font-size: 30px;
 }
 @media screen and (max-width: 550px) {
+    .weatherContainer{
+        font-weight: normal;
+    }
     .temperature {
         display: block;
     }
     #shortForecast{
-        font-size: .5rem;
+        font-size: .75rem;
+    }
+    #feelsLike{
+        font-size: .75rem;
+      }
+    img{
+        width: 20vw;
     }
     .iconDiv{
         margin: 0;
         text-align: center;
     }
     .temperatureDIv{
+        line-height: .5;
+        font-weight: normal;
     margin: 0;
       text-align: center;
-    padding: 0;
+    padding:0;
       }
     #temperature{
         font-size: 1.5rem;
@@ -98,18 +123,15 @@ p{
         line-height: .5;
     }
     .windDIv{
-        font-size: 10px;;
+        font-size: 0.75rem;;
     }
     .rainChanceDiv{
-        font-size: 10px;
+        font-size: 0.75rem;
     }
     #weatherAlerts{
         font-size: 10px;
     }
     .alertTitle{
         font-size: 1rem;
-    }
-    p{
-        font-size: 10px;
     }
   }
