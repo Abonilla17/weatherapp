@@ -23,22 +23,23 @@
           </label>
           <button onclick="getLocation();"> Get Weather</button>
         <h1 class="centered alertTitle hidden" id="alertTitle" > Active Weather Alerts: </h1>
+        <p id="city"></p>
+        <p id="state"></p>
         <div id="weatherAlerts">
         </div>
         <div class="weatherContainer">
             <p id="observationInformation"></p>
-            <p id="city"></p>
-            <p id="state"></p>
             <p id="weatherFor"></p>
             <p id="weatherValidTime"></p>
             <div class="temperature">
-                <div class="iconDiv">
+                <div class="iconDiv hidden" id="imageContainer">
                   <!-- <i id="weatherIcon"></i>  -->
-                  <img id="weatherImage">
+                  <img id="weatherImage" onload="removeBorder()">
                 </div>
                 <div class="temperatureDIv">
                     <p id="temperature"> </p>  
-                     <p id="shortForecast"></p>  
+                    <p id="feelsLike"></p>
+                    <p id="shortForecast"></p> 
                 </div>
               <div class="windRainContainer">
                 <div class="windDIv">
@@ -46,6 +47,7 @@
                 </div>
                 <div class="rainChanceDiv">
                     <p id="rainChance"> </p>
+        
                 </div>
             </div>
        
