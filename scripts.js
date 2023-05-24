@@ -252,7 +252,17 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
   return feelsLikeTemperature;
 }
 
-          function removeBorder() {
-            var container = document.getElementById("imageContainer");
-            container.classList.remove("hidden");
-          }
+ function removeBorder() {
+ var container = document.getElementById("imageContainer");
+ container.classList.remove("hidden");
+ }
+ function showReloadButton(){
+  var reloadBUtton = document.getElementById("reloadWeather");
+ reloadBUtton.classList.remove("hidden");
+ }
+ function off() {
+   document.getElementById("overlay").style.display = "none";
+ }
+ function on() {
+  document.getElementById("overlay").style.display = "block";
+}
