@@ -13,15 +13,21 @@
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/weather-icons.css">
     </head>
-    <body>
+    <body onload="on()">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div class="weatherSettings" id="overlay">
+            <h1> Settings </h1>
         <label class="useDaily">
             <input type="checkbox" name="checkbox" id="useDaily" />
-            Use Hourly forecast 
+            Get Hourly forecast 
           </label>
-          <button onclick="getLocation();"> Get Weather</button>
+          <br>
+          <br>
+          <button onclick="getLocation(); off(); showReloadButton();"> Get Weather</button>
+        </div>
+        <button onclick="on();" id="reloadWeather" class="hidden"> Reload weather</button>
         <h1 class="centered alertTitle hidden" id="alertTitle" > Active Weather Alerts: </h1>
         <p id="city"></p>
         <p id="state"></p>
