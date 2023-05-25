@@ -262,7 +262,9 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
  }
  function off() {
    document.getElementById("overlay").style.display = "none";
+   document.getElementById("mainContent").style.display = "unset";
  }
  function on() {
   document.getElementById("overlay").style.display = "block";
+  document.getElementById("mainContent").style.display = "none";
 }
