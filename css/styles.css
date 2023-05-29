@@ -91,6 +91,9 @@ img{
         margin: 0;
         text-align: center;
     }
+    img{
+       width:15vw;
+    }
     .temperatureDIv{
         line-height: .5;
         font-weight: normal;
