@@ -73,6 +73,8 @@ function getWeather(latitude, longitude) {
               for (let i = 0; i < alertData.features.length; i++) {
                 const activeAlerts = alertData.features[i].properties.headline;
                 alerts.innerHTML += activeAlerts + `<br>`;
+                alerts.classList.add('alert');
+                alerts.classList.add('alert-info');   
               }
             } else {
               alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
@@ -86,18 +88,6 @@ function getWeather(latitude, longitude) {
           console.log(data2);
           console.log(data2.properties.periods[0].probabilityOfPrecipitation.value);
            const isDaytime = data2.properties.periods[0].isDaytime;
-          // switch (`${data2.properties.periods[0].probabilityOfPrecipitation.value}`) {
-          //   case "0":
-          //     icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
-          //     break;
-          //   default:
-          //     if (parseInt(data2.properties.periods[0].probabilityOfPrecipitation.value) > 0) {
-          //       icon.className = isDaytime ? `wi wi-day-sprinkle` : `wi wi-night-showers`;
-          //     } else {
-          //       icon.className = isDaytime ? `wi wi-day-sunny` : `wi wi-night-clear`;
-          //     }
-          //     break;
-          // }  
           console.log(data2.properties.periods[0].isDaytime);
           const dateString = `${data2.properties.periods[0].endTime}`;
           const date = new Date(dateString);
@@ -170,7 +160,7 @@ function getHourlyWeather(latitude, longitude) {
       state.innerHTML = ` State = ${data.properties.relativeLocation.properties.state}`;
 
       const weatherAlerts = `https://api.weather.gov/alerts/active?area=${data.properties.relativeLocation.properties.state}`;
-
+      const testWeatherAlert =`https://api.weather.gov/alerts/active?area=NM`
       fetch(weatherAlerts)
         .then((response) => response.json())
         .then((alertData) => {
@@ -191,6 +181,8 @@ function getHourlyWeather(latitude, longitude) {
               for (let i = 0; i < alertData.features.length; i++) {
                 const activeAlerts = alertData.features[i].properties.headline;
                 alerts.innerHTML += activeAlerts + `<br>`;
+                alerts.classList.add('alert');
+                alerts.classList.add('alert-info');                
               }
             } else {
               alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
@@ -220,10 +212,16 @@ function getHourlyWeather(latitude, longitude) {
           shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
           const dateString2 = `${data2.properties.periods[0].startTime}`;
           const date2 = new Date(dateString2);
-          const options2 = { hour: 'numeric', minute: 'numeric' };
-          const formattedDate2 = date2.toLocaleString(undefined, options2);
+          const options2 = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+          };
+          const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
           console.log(formattedDate2);
-          forecastFor.innerHTML = `${formattedDate2}'s forecast`;
+          forecastFor.innerHTML = `Forcast for ${formattedDate2}`;
           var temperatureInput = data2.properties.periods[0].temperature;
           var humidity1 = data2.properties.periods[0].relativeHumidity.value;
           var humidity = humidity1 / 100;
@@ -267,4 +265,4 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
  function on() {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("mainContent").style.display = "none";
-}
+} 
