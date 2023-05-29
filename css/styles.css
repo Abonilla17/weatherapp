@@ -1,10 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-html{
-    margin: 0px;
-    color: white;
-    background-color: #34495E;
-    line-height: 1;
-    font-family: 'Roboto', sans-serif;
+ @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+main{
+    color-scheme: light dark;
 }
 #overlay {
     position: fixed;
@@ -15,11 +11,12 @@ html{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.5);
     z-index: 2;
     cursor: pointer;
     text-align: center;
-  }
+    color: black;
+  } 
 .weatherSettings{
 
 }
@@ -29,91 +26,57 @@ html{
 .hidden{
     display: none;
 }
-img{
-    width: 7.5vw;
-    border:solid 1.5px;
-    border-bottom-color:black;
-    border-left-color: black;
-    border-right-color:black;
-    border-top-color:black;
-}
-.iconDiv{
-    padding-right: 1%;
-}
 .centered{
     text-align: center;
 }
 h1{
     font-weight: bolder;
-    text-align: center;
-}
-.getLocation{
-    text-align: center;
-}
-#locationData{
-    text-align: center;
-}
-p{
-    text-align: center;
-}
-.buttons{
-    text-align: center;
 }
 .weatherContainer{
     background-color: #F39C12;
     color: black;
-    margin: 5%;
     border: 2px solid #F39C12;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-bottom: 6%;
+}
+img{
+    border: 2px solid black;
 }
 #weatherAlerts{
-    text-align: center;
-    margin: 2%;
+    margin-bottom: 3%;
 }
 .hidden-border {
     border: none;
   }
 .temperature {
     line-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 3rem;
-  }
-  .temperatureDIv{
-    margin: 0;
-    font-size: 3rem;
-    padding-right: 50px;
-  }
-  #shortForecast {
-    font-weight: normal;
-    text-align: center;
-    font-size: 1.5rem;
-  }
-  #feelsLike{
-    font-weight: normal;
-    font-size: 1.5rem;
   }
   #temperature {
     font-weight: bold;
+    font-size: 2rem;
+  } 
+   #shortForecast {
+    font-weight: normal;
+    font-size: 1rem;
   }
-.windRainContainer{
-    line-height: 0;
-}
-.windDIv{
-    font-size: 1.25rem;;
-}
-.rainChanceDiv{
-    font-size: 1.25rem;;
-}
-.windRainContainer{
-    font-size: 30px;
+  #feelsLike{
+    font-weight: normal;
+    font-size: 1rem;
+  }
+#weatherImage{
+
 }
 @media screen and (max-width: 550px) {
     .weatherContainer{
+        margin: 0%;
+        padding: 0;
         font-weight: normal;
     }
-    .temperature {
-        display: block;
+    #temperature{
+        font-size: .75rem;
+        font-weight: bold;
     }
     #shortForecast{
         font-size: .75rem;
@@ -154,4 +117,17 @@ p{
     .alertTitle{
         font-size: 1rem;
     }
-  }
+    #weatherImage{
+        max-width: 80%;
+    }
+    #imageContainer {
+        flex-direction: column;
+        align-items: center;
+      }
+      #weatherImage {
+        float: none;
+      }
+      #imageContainer > div {
+        margin-top: 15px;
+      }
+  } 
