@@ -65,8 +65,9 @@ img{
     font-weight: normal;
     font-size: 1rem;
   }
-#weatherImage{
-
+.temperatureDIv{
+    margin-left: 15px;
+    line-height: 0.5;
 }
 @media screen and (max-width: 550px) {
     .weatherContainer{
@@ -95,14 +96,14 @@ img{
        width:15vw;
     }
     .temperatureDIv{
-        line-height: .5;
+        line-height: 1.4;
         font-weight: normal;
-    margin: 0;
+        margin-left: 5px;
       text-align: center;
     padding:0;
       }
     #temperature{
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         text-align: center;
     }
     .windRainContainer{
@@ -133,4 +134,5 @@ img{
       #imageContainer > div {
         margin-top: 15px;
       }
+      
   } 
