@@ -70,4 +70,33 @@
 </div>
   <script src="scripts.js" async defer></script>
 </body>
+
+        <div class="weatherContainer">
+            <p id="observationInformation"></p>
+            <p id="weatherFor"></p>
+            <p id="weatherValidTime"></p>
+            <div class="temperature">
+                <div class="iconDiv hidden" id="imageContainer">
+                  <!-- <i id="weatherIcon"></i>  -->
+                  <img id="weatherImage" onload="removeBorder()">
+                </div>
+                <div class="temperatureDIv">
+                    <p id="temperature"> </p>  
+                    <p id="feelsLike"></p>
+                    <p id="shortForecast"></p> 
+                </div>
+              <div class="windRainContainer">
+                <div class="windDIv">
+                    <p id="winds"> </p>
+                </div>
+                <div class="rainChanceDiv">
+                    <p id="rainChance"> </p>
+        
+                </div>
+            </div>
+        </main>
+       
+        <script src="scripts.js" async defer></script>
+    </body>
+
 </html>
