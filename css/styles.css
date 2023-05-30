@@ -118,7 +118,7 @@ img{
         font-size: 1rem;
     }
     #weatherImage{
-        max-width: 80%;
+        width: 25vw;
     }
     #imageContainer {
         flex-direction: column;
