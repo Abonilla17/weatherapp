@@ -20,17 +20,15 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <div class="container">
-  <div class="weatherSettings" id="overlay">
-    <h1>Settings</h1>
-    <label class="useDaily">
-      <input type="checkbox" name="checkbox" id="useDaily" />
-      Get Hourly forecast
-    </label>
-    <br>
-    <br>
-    <button onclick="getLocation(); off(); showReloadButton();">Get Weather</button>
-  </div>
-  <button onclick="on();" id="reloadWeather" class="hidden">Reload weather</button>
+    <div class="weatherSettings" id="overlay">
+      <h1 id="settings">Settings</h1>
+      <label class="useDaily" id="daily">
+          <input type="checkbox" name="checkbox" id="useDaily" />
+          Get Hourly forecast
+      </label><br>
+      <button id="showWeather" onclick="getLocation(); off(); showReloadButton();"  type="button" class="btn">Get Weather</button><br>
+  </div>  
+  <button onclick="on();" id="reloadWeather" type="button" class="btn btn-link hidden">Settings</button>
   <main id="mainContent">
     <h1 class="centered alertTitle hidden" id="alertTitle">Active Weather Alerts:</h1>
     <p id="city" class="text-center"></p>

@@ -5,6 +5,8 @@ const alertTitle = document.getElementById("alertTitle");
 const pictureSize = "medium";
 var temperatureInput= "";
 var humidity1 = "";
+const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+console.log(isDarkMode);
 function getLocation(){
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -265,4 +267,20 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
  function on() {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("mainContent").style.display = "none";
+  const buttonShow = document.getElementById("showWeather");
+  if(isDarkMode == true)
+  {
+    document.getElementById("overlay").style.backgroundColor = "black";
+    document.getElementById("settings").style.color = "white";
+    document.getElementById("daily").style.color = "white";
+    document.getElementById("showWeather").style.color = "white";
+   buttonShow.classList.add("btn-outline-dark");
+  }
+  else{
+    document.getElementById("overlay").style.backgroundColor = "white";
+    document.getElementById("settings").style.color = "black";
+    document.getElementById("daily").style.color = "black";
+    document.getElementById("showWeather").style.color = "black";
+    buttonShow.classList.add("btn-outline-light");
+  }
 } 
