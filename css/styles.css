@@ -66,10 +66,22 @@ img{
     font-weight: normal;
     font-size: 1rem;
   }
-.temperatureDIv{
+  .temperatureDiv {
     margin-left: 15px;
     line-height: 0.5;
-}
+  }
+  .icons-container {
+    display: flex;
+  }
+  
+  .icon {
+    margin-right: 10px; /* Adjust as needed */
+  }
+  
+  .icon img {
+    width: 30px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+  }
 @media screen and (max-width: 550px) {
     .weatherContainer{
         margin: 0%;
@@ -77,15 +89,9 @@ img{
         font-weight: normal;
     }
     #temperature{
-        font-size: .75rem;
+        font-size: 1.25rem;
         font-weight: bold;
     }
-    #shortForecast{
-        font-size: .75rem;
-    }
-    #feelsLike{
-        font-size: .75rem;
-      }
     img{
         width: 20vw;
     }
@@ -97,16 +103,11 @@ img{
        width:15vw;
     }
     .temperatureDIv{
-        line-height: 1.4;
+        line-height:1.4;
         font-weight: normal;
-        margin-left: 5px;
-      text-align: center;
     padding:0;
+    font-size: .75rem;
       }
-    #temperature{
-        font-size: 1.25rem;
-        text-align: center;
-    }
     .windRainContainer{
         line-height: .5;
     }
@@ -124,13 +125,11 @@ img{
     }
     #weatherImage{
         width: 25vw;
+        float: none;
     }
     #imageContainer {
         flex-direction: column;
         align-items: center;
-      }
-      #weatherImage {
-        float: none;
       }
       #imageContainer > div {
         margin-top: 15px;

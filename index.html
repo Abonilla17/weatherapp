@@ -38,12 +38,24 @@
       <p id="observationInformation" class="text-center" ></p>
       <p id="weatherFor" class="text-center"></p>
       <p id="weatherValidTime" class="text-center"></p>
-      <div class="container text-center">
+       <div class="container text-center">
         <div class="">
           <div class="d-flex align-items-center justify-content-center">
             <!-- Image -->
-            <div id="imageContainer">
-            <img id="weatherImage" style="float: right;" onload="removeBorder()" />
+            <div id="imageContainer" style="float:right;line-height: 1;padding-right: 15px;" class="text-center">
+            <img id="weatherImage" onload="removeBorder()" /> <br>
+            <div class="icons-container">
+              <div class="icon"> 
+                <p id="winds"> Winds: </p> 
+                <p class="" id="windForecast"></p>
+                 <i class="fa-solid" id="windDirection"></i>
+              </div>
+              <div class="icon"> 
+                <p id="rainChance"> Chance of rain:</p> 
+                <i class="" id="rainChanceIcon" style="font-style:normal;"></i>
+                <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
+              </div>
+            </div>
           </div>
             <!-- Text -->
             <div class="temperatureDIv">
@@ -54,8 +66,21 @@
           </div>
         </div>
       </div>      
-<br>
-      <div class="windRainContainer" style="line-height: 0;">
+      
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-sm" style="float:right;">
+      <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <div class="col-sm">
+      <i class="fa-solid fa-arrow-up"></i>
+    </div>
+    <div class="col-sm" style="float: left;">
+      <i class="fa-solid fa-arrow-right"></i>
+    </div>
+  </div>
+</div> -->
+      <!-- <div class="windRainContainer" style="line-height: 0;">
         <div class="windDIv">
           <p id="winds" class="text-center"></p>
         </div>
@@ -63,10 +88,11 @@
           <p id="rainChance" class="text-center"></p>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
 </div>
   <script src="scripts.js" async defer></script>
+  <script src="https://kit.fontawesome.com/c804f1a805.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
