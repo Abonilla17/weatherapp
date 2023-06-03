@@ -7,6 +7,9 @@ var temperatureInput= "";
 var humidity1 = "";
 const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 console.log(isDarkMode);
+const rainChanceIcon = document.getElementById("rainChanceIcon");
+const windForecast = document.getElementById("windForecast");
+const windDirection = document.getElementById("windDirection");
 function getLocation(){
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -98,7 +101,37 @@ function getWeather(latitude, longitude) {
             console.log(formattedDate);
             console.log(data2.properties.periods[0].icon);
           weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
-          winds.innerHTML = `Winds: ${data2.properties.periods[0].windSpeed} going ${data2.properties.periods[0].windDirection} `;
+          const direction = `${data2.properties.periods[0].windDirection}`;
+          console.log(direction);
+          windForecast.innerHTML = `${data2.properties.periods[0].windSpeed} ${direction}`;
+          // switch(data2.properties.periods[0].windDirection) {
+          //   case N:
+          //     // code block
+          //     break;
+          //   case NE:
+          //     // code block
+          //     break;
+          //   case E:
+          //       // code block
+          //     break;
+          //     case SE:
+          //       // code block
+          //     break;
+          //     case S:
+          //       // code block
+          //     break;
+          //     case SW:
+          //       // code block
+          //     break;
+          //     case W:
+          //       // code block
+          //     break;
+          //     case NW:
+          //       // code block
+          //     break;
+          //   default:
+          //     // code block
+          // }
           temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
           shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
           document.getElementById(`weatherImage`).src = `${data2.properties.periods[0].icon}`;
@@ -113,10 +146,11 @@ function getWeather(latitude, longitude) {
           var humidity = humidity1 / 100;
           if(data2.properties.periods[0].probabilityOfPrecipitation.value != null)
           {
-            rainChance.innerHTML = `Chance of rain: ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
+            rainChanceIcon.innerHTML = `${data2.properties.periods[0].probabilityOfPrecipitation.value}`;
+            // rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
           }
           else{
-            rainChance.innerHTML = `Chance of rain:  0% chance of rain`;
+            rainChanceIcon.innerHTML = `0`;
           }
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
@@ -209,7 +243,9 @@ function getHourlyWeather(latitude, longitude) {
           console.log(modifiedLink);
           document.getElementById("weatherImage").src = modifiedLink;
           weatherValidTime.innerHTML = `This forecast is valid until ${formattedDate} `;
-          winds.innerHTML = `Winds: ${data2.properties.periods[0].windSpeed} going ${data2.properties.periods[0].windDirection} `;
+          const direction = `${data2.properties.periods[0].windDirection}`;
+          console.log(direction);
+          windForecast.innerHTML = `${data2.properties.periods[0].windSpeed} ${direction}`;
           temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}`;
           shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
           const dateString2 = `${data2.properties.periods[0].startTime}`;
@@ -223,14 +259,16 @@ function getHourlyWeather(latitude, longitude) {
           };
           const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
           console.log(formattedDate2);
-          forecastFor.innerHTML = `Forcast for ${formattedDate2}`;
+          forecastFor.innerHTML = `Forecast for ${formattedDate2}`;
           var temperatureInput = data2.properties.periods[0].temperature;
           var humidity1 = data2.properties.periods[0].relativeHumidity.value;
           var humidity = humidity1 / 100;
           if (data2.properties.periods[0].probabilityOfPrecipitation.value != null) {
-            rainChance.innerHTML = `Chance of rain: ${data2.properties.periods[0].probabilityOfPrecipitation.value}% chance of rain`;
-          } else {
-            rainChance.innerHTML = `Chance of rain:  0% chance of rain`;
+            rainChanceIcon.innerHTML = `${data2.properties.periods[0].probabilityOfPrecipitation.value}`;
+            rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
+          }
+          else{
+            rainChanceIcon.innerHTML = `0`;
           }
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
