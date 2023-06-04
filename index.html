@@ -44,7 +44,7 @@
             <!-- Image -->
             <div id="imageContainer" style="float:right;line-height: 1;padding-right: 15px;" class="text-center">
             <img id="weatherImage" onload="removeBorder()" /> <br>
-            <div class="icons-container">
+            <!-- <div class="icons-container">
               <div class="icon"> 
                 <p id="winds"> Winds: </p> 
                 <p class="" id="windForecast"></p>
@@ -56,30 +56,35 @@
                 <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
               </div>
             </div>
-          </div>
+          </div> -->
             <!-- Text -->
             <div class="temperatureDIv">
               <p id="temperature"></p>
-              <p id="feelsLike"></p>
+              <!-- <p id="feelsLike"></p> -->
               <p id="shortForecast"></p>
             </div>
           </div>
         </div>
       </div>      
       
-<!-- <div class="container">
+<div class="container">
   <div class="row">
     <div class="col-sm" style="float:right;">
-      <i class="fa-solid fa-arrow-left"></i>
+      <h3 id="winds"> Winds: </h3> 
+                <p class="" id="windForecast"></p>
+                 <i class="fa-solid" id="windDirection"></i>
     </div>
     <div class="col-sm">
-      <i class="fa-solid fa-arrow-up"></i>
+      <h3 id="rainChance"> Chance of rain:</h3> 
+                <i class="" id="rainChanceIcon" style="font-style:normal;"></i>
+                <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
     </div>
     <div class="col-sm" style="float: left;">
-      <i class="fa-solid fa-arrow-right"></i>
+      <h3> Feels like: </h3>
+      <p id="feelsLike"></p>
     </div>
   </div>
-</div> -->
+</div>
       <!-- <div class="windRainContainer" style="line-height: 0;">
         <div class="windDIv">
           <p id="winds" class="text-center"></p>

@@ -265,14 +265,14 @@ function getHourlyWeather(latitude, longitude) {
           var humidity = humidity1 / 100;
           if (data2.properties.periods[0].probabilityOfPrecipitation.value != null) {
             rainChanceIcon.innerHTML = `${data2.properties.periods[0].probabilityOfPrecipitation.value}`;
-            rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
+            // rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
           }
           else{
             rainChanceIcon.innerHTML = `0`;
           }
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
-          feelsLIke.innerHTML = "Feels like: " + feelsLikeTemperature.toFixed(0) + "°F";
+          feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
         });
     });
 }
