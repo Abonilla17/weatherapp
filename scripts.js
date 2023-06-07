@@ -154,7 +154,7 @@ function getWeather(latitude, longitude) {
           }
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
-          feelsLIke.innerHTML = "Feels like: " + feelsLikeTemperature.toFixed(0) + "°F";
+          feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
         });
     });
 }
@@ -301,6 +301,8 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
  function off() {
    document.getElementById("overlay").style.display = "none";
    document.getElementById("mainContent").style.display = "unset";
+   const weatrherContent = document.getElementById("weatherContent");
+   weatrherContent.classList.remove("hidden");
  }
  function on() {
   document.getElementById("overlay").style.display = "block";
