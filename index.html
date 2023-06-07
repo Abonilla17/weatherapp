@@ -34,66 +34,44 @@
     <p id="city" class="text-center"></p>
     <p id="state" class="text-center"></p>
     <div id="weatherAlerts" class="text-center" role="alert"></div>
-    <div class="text-center weatherContainer">
+    <div class="text-center weatherContainer hidden" id="weatherContent">
       <p id="observationInformation" class="text-center" ></p>
       <p id="weatherFor" class="text-center"></p>
       <p id="weatherValidTime" class="text-center"></p>
-       <div class="container text-center">
-        <div class="">
-          <div class="d-flex align-items-center justify-content-center">
-            <!-- Image -->
-            <div id="imageContainer" style="float:right;line-height: 1;padding-right: 15px;" class="text-center">
-            <img id="weatherImage" onload="removeBorder()" /> <br>
-            <!-- <div class="icons-container">
-              <div class="icon"> 
-                <p id="winds"> Winds: </p> 
-                <p class="" id="windForecast"></p>
-                 <i class="fa-solid" id="windDirection"></i>
-              </div>
-              <div class="icon"> 
-                <p id="rainChance"> Chance of rain:</p> 
-                <i class="" id="rainChanceIcon" style="font-style:normal;"></i>
-                <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
-              </div>
-            </div>
-          </div> -->
-            <!-- Text -->
-            <div class="temperatureDIv">
-              <p id="temperature"></p>
-              <!-- <p id="feelsLike"></p> -->
-              <p id="shortForecast"></p>
+      <div class="container-fluid text-center">
+        <div class="row">
+          <div class="col">
+            <div id="imageContainer" style="line-height: 1;margin: 0;" class="text-center">
+              <img id="weatherImage" onload="removeBorder()" style="float:right" /> <br>
             </div>
           </div>
+          <div class="col">
+            <div class="temperatureDiv text-center">
+              <div>
+                <p id="temperature" class="text-start" style="line-height: 2;"></p>
+              </div>
+            </div>
         </div>
-      </div>      
-      
+      </div>
+      <p id="shortForecast"></p>
+
 <div class="container">
   <div class="row">
-    <div class="col-sm" style="float:right;">
+    <div class="col">
       <h3 id="winds"> Winds: </h3> 
-                <p class="" id="windForecast"></p>
-                 <i class="fa-solid" id="windDirection"></i>
+   <p id="windForecast"></p>
     </div>
-    <div class="col-sm">
+    <div class="col">
       <h3 id="rainChance"> Chance of rain:</h3> 
-                <i class="" id="rainChanceIcon" style="font-style:normal;"></i>
-                <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
+      <p class="inline" id="rainChanceIcon" style="font-style:normal;"></p>
+<i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
     </div>
-    <div class="col-sm" style="float: left;">
+    <div class="col">
       <h3> Feels like: </h3>
       <p id="feelsLike"></p>
     </div>
   </div>
 </div>
-      <!-- <div class="windRainContainer" style="line-height: 0;">
-        <div class="windDIv">
-          <p id="winds" class="text-center"></p>
-        </div>
-        <div class="rainChanceDiv">
-          <p id="rainChance" class="text-center"></p>
-        </div>
-      </div>
-    </div> -->
   </main>
 </div>
   <script src="scripts.js" async defer></script>
