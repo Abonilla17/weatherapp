@@ -20,13 +20,20 @@ function getLocation(){
       alertTitle.style.display = "block";
       // Call getWeather function after the location is retrieved
       if (document.getElementById('useDaily').checked) {
+        if (document.getElementById('resetIndex').checked) {
+          console.log('index reset');
+          indexNumber = "0";
+        }
         getHourlyWeather(latitude, longitude);
-        console.log(`Called hourly weather`);
-    } else {
-      getWeather(latitude, longitude);
-      console.log(`Called default weather`);
-    }
-      
+        console.log('Called hourly weather');
+      } else {
+        if (document.getElementById('resetIndex').checked) {
+          console.log('index reset');
+          indexNumber = "0";
+        }
+        getWeather(latitude, longitude);
+        console.log('Called default weather');
+      }
     }, function() {
       // Callback function to handle errors
       alert(`Unable to retrieve location`);
@@ -38,7 +45,7 @@ function getLocation(){
 
 // Fetch the weather data based on the latitude and longitude
 function getWeather(latitude, longitude) {
-  
+
   const weatherForecast = document.getElementById('weather');
   const city = document.getElementById(`city`);
   const state = document.getElementById(`state`);
@@ -51,6 +58,7 @@ function getWeather(latitude, longitude) {
   const weatherValidTime = document.getElementById(`weatherValidTime`);
   const forecastFor = document.getElementById(`weatherFor`);
   const feelsLIke = document.getElementById(`feelsLike`);
+  const futureForecast = document.getElementById("futurePeriods");
   let iconImage = "";
   const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   console.log(indexNumber);
@@ -99,7 +107,9 @@ function getWeather(latitude, longitude) {
           console.log(data2);
           console.log(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value);
            const isDaytime = data2.properties.periods[indexNumber].isDaytime;
-          console.log(data2.properties.periods[indexNumber].isDaytime);
+           console.log(data2.properties.periods[indexNumber].isDaytime)
+           const futurePeriodsLength = data2.properties.periods.length;
+          console.log(futurePeriodsLength);
           const dateString = `${data2.properties.periods[indexNumber].endTime}`;
           const date = new Date(dateString);
           const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
@@ -133,6 +143,14 @@ function getWeather(latitude, longitude) {
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
           feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
+          futureForecast.innerHTML = "";
+          for (let i = 0; i < futurePeriodsLength; i++) {
+            const options = data2.properties.periods[i].name;
+            const option = document.createElement("option");
+            option.text = options;
+            option.value = i;
+            futureForecast.appendChild(option);
+          }
         });
     });
 }
@@ -164,6 +182,7 @@ function getHourlyWeather(latitude, longitude) {
   const forecastFor = document.getElementById("weatherFor");
   const feelsLIke = document.getElementById(`feelsLike`);
   let iconImage = "";
+  const futureForecast = document.getElementById("futurePeriods");
   const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
 
   fetch(weatherdata)
@@ -227,6 +246,8 @@ function getHourlyWeather(latitude, longitude) {
           weatherValidTime.innerHTML = `This forecast is valid until ${formattedDate} `;
           const direction = `${data2.properties.periods[indexNumber].windDirection}`;
           console.log(direction);
+          const futurePeriodsLength = data2.properties.periods.length;
+          console.log(futurePeriodsLength);
           windForecast.innerHTML = `${data2.properties.periods[indexNumber].windSpeed} ${direction}`;
           temperature.innerHTML = `${data2.properties.periods[indexNumber].temperature}°${data2.properties.periods[0].temperatureUnit}`;
           shortForecast.innerHTML = `${data2.properties.periods[indexNumber].shortForecast}`;
@@ -255,6 +276,24 @@ function getHourlyWeather(latitude, longitude) {
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
           feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
+          futureForecast.innerHTML = "";
+          for (let i = 0; i < futurePeriodsLength; i++) {
+            const dateStart = data2.properties.periods[i].startTime;
+            const date2 = new Date(dateStart);
+            const options2 = {
+              month: 'long',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            };
+            const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
+            console.log(formattedDate2);
+            const options = `Forecast for ${formattedDate2}`;
+            const option = document.createElement("option");
+            option.text = options;
+            option.value = i;
+            futureForecast.appendChild(option);
+          }
         });
     });
 }
@@ -306,3 +345,13 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
     buttonShow.classList.add("btn-outline-light");
   }
 } 
+function getFutureForecast(){
+  indexNumber = "0";
+  alert(indexNumber);
+  var futurePeriods = document.getElementById("futurePeriods");
+  var selectedValue = futurePeriods.value;
+  indexNumber = selectedValue;
+  alert(indexNumber);
+  document.getElementById(`resetIndex`).checked.false;
+  getLocation();
+}
