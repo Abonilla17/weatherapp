@@ -347,11 +347,9 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
 } 
 function getFutureForecast(){
   indexNumber = "0";
-  alert(indexNumber);
   var futurePeriods = document.getElementById("futurePeriods");
   var selectedValue = futurePeriods.value;
   indexNumber = selectedValue;
-  alert(indexNumber);
   document.getElementById(`resetIndex`).checked.false;
   getLocation();
 }
