@@ -10,6 +10,7 @@ console.log(isDarkMode);
 const rainChanceIcon = document.getElementById("rainChanceIcon");
 const windForecast = document.getElementById("windForecast");
 const windDirection = document.getElementById("windDirection");
+let indexNumber = 0;
 function getLocation(){
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -37,6 +38,7 @@ function getLocation(){
 
 // Fetch the weather data based on the latitude and longitude
 function getWeather(latitude, longitude) {
+  
   const weatherForecast = document.getElementById('weather');
   const city = document.getElementById(`city`);
   const state = document.getElementById(`state`);
@@ -51,7 +53,7 @@ function getWeather(latitude, longitude) {
   const feelsLIke = document.getElementById(`feelsLike`);
   let iconImage = "";
   const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
-  
+  console.log(indexNumber);
   fetch(weatherdata)
     .then(response => response.json())
     .then(data => {
@@ -72,14 +74,18 @@ function getWeather(latitude, longitude) {
           console.log(readableDateTime);
           alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
           console.log(alertData.features.length);
-          if(alertData.features.length > 0 && alertData.features[0].properties.headline != undefined) {
+          if(alertData.features.length > 0 && alertData.features[indexNumber].properties.headline != undefined) {
             if (alertData.features.length > 0) {
               alerts.innerHTML = ''; // Clear any existing content before appending new alerts
               for (let i = 0; i < alertData.features.length; i++) {
                 const activeAlerts = alertData.features[i].properties.headline;
+                const alertDescription = alertData.features[i].properties.description;
+                const areaDescription = alertData.features[i].properties.areaDesc;
                 alerts.innerHTML += activeAlerts + `<br>`;
+                alerts.innerHTML += `Applicable to: ` + areaDescription + `<br>`;
+                alerts.innerHTML += alertDescription + `<br>`;
                 alerts.classList.add('alert');
-                alerts.classList.add('alert-info');   
+                alerts.classList.add('alert-info');        
               }
             } else {
               alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
@@ -91,62 +97,34 @@ function getWeather(latitude, longitude) {
         .then(response => response.json())
         .then(data2 => {
           console.log(data2);
-          console.log(data2.properties.periods[0].probabilityOfPrecipitation.value);
-           const isDaytime = data2.properties.periods[0].isDaytime;
-          console.log(data2.properties.periods[0].isDaytime);
-          const dateString = `${data2.properties.periods[0].endTime}`;
+          console.log(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value);
+           const isDaytime = data2.properties.periods[indexNumber].isDaytime;
+          console.log(data2.properties.periods[indexNumber].isDaytime);
+          const dateString = `${data2.properties.periods[indexNumber].endTime}`;
           const date = new Date(dateString);
           const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
             const formattedDate = date.toLocaleString(undefined, options);
             console.log(formattedDate);
-            console.log(data2.properties.periods[0].icon);
+            console.log(data2.properties.periods[indexNumber].icon);
           weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
-          const direction = `${data2.properties.periods[0].windDirection}`;
+          const direction = `${data2.properties.periods[indexNumber].windDirection}`;
           console.log(direction);
-          windForecast.innerHTML = `${data2.properties.periods[0].windSpeed} ${direction}`;
-          // switch(data2.properties.periods[0].windDirection) {
-          //   case N:
-          //     // code block
-          //     break;
-          //   case NE:
-          //     // code block
-          //     break;
-          //   case E:
-          //       // code block
-          //     break;
-          //     case SE:
-          //       // code block
-          //     break;
-          //     case S:
-          //       // code block
-          //     break;
-          //     case SW:
-          //       // code block
-          //     break;
-          //     case W:
-          //       // code block
-          //     break;
-          //     case NW:
-          //       // code block
-          //     break;
-          //   default:
-          //     // code block
-          // }
-          temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
-          shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
+          windForecast.innerHTML = `${data2.properties.periods[indexNumber].windSpeed} ${direction}`;
+          temperature.innerHTML = `${data2.properties.periods[indexNumber].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
+          shortForecast.innerHTML = `${data2.properties.periods[indexNumber].shortForecast}`;
           document.getElementById(`weatherImage`).src = `${data2.properties.periods[0].icon}`;
-          const dateString2 = `${data2.properties.periods[0].startTime}`;
+          const dateString2 = `${data2.properties.periods[indexNumber].startTime}`;
           const date2 = new Date(dateString2);
           const options2 = {hour: 'numeric', minute: 'numeric'};
             const formattedDate2 = date2.toLocaleString(undefined, options2);
             console.log(formattedDate2);
-          forecastFor.innerHTML = `${data2.properties.periods[0].name}'s forecast`;
-          var temperatureInput = data2.properties.periods[0].temperature;
-          var humidity1 = data2.properties.periods[0].relativeHumidity.value;
+          forecastFor.innerHTML = `${data2.properties.periods[indexNumber].name}'s forecast`;
+          var temperatureInput = data2.properties.periods[indexNumber].temperature;
+          var humidity1 = data2.properties.periods[indexNumber].relativeHumidity.value;
           var humidity = humidity1 / 100;
-          if(data2.properties.periods[0].probabilityOfPrecipitation.value != null)
+          if(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value != null)
           {
-            rainChanceIcon.innerHTML = `${data2.properties.periods[0].probabilityOfPrecipitation.value}`;
+            rainChanceIcon.innerHTML = `${data2.properties.periods[indexNumber].probabilityOfPrecipitation.value}`;
             // rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
           }
           else{
@@ -216,9 +194,13 @@ function getHourlyWeather(latitude, longitude) {
               alerts.innerHTML = ""; // Clear any existing content before appending new alerts
               for (let i = 0; i < alertData.features.length; i++) {
                 const activeAlerts = alertData.features[i].properties.headline;
+                const alertDescription = alertData.features[i].properties.description;
+                const areaDescription = alertData.features[i].properties.areaDesc;
                 alerts.innerHTML += activeAlerts + `<br>`;
+                alerts.innerHTML += `Applicable to: ` + areaDescription + `<br>`;
+                alerts.innerHTML += alertDescription + `<br>`;
                 alerts.classList.add('alert');
-                alerts.classList.add('alert-info');                
+                alerts.classList.add('alert-info');         
               }
             } else {
               alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
@@ -230,25 +212,25 @@ function getHourlyWeather(latitude, longitude) {
         .then((response) => response.json())
         .then((data2) => {
           console.log(data2);
-          console.log(data2.properties.periods[0].probabilityOfPrecipitation.value);
-          const dateString = `${data2.properties.periods[0].endTime}`;
+          console.log(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value);
+          const dateString = `${data2.properties.periods[indexNumber].endTime}`;
           const date = new Date(dateString);
           const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
           const formattedDate = date.toLocaleString(undefined, options);
           console.log(formattedDate);
-          console.log(data2.properties.periods[0].icon);
+          console.log(data2.properties.periods[indexNumber].icon);
           const link = data2.properties.periods[0].icon;
           // Change "small" to "medium" in the link
           let modifiedLink = link.replace("size=small", "size=medium");
           console.log(modifiedLink);
           document.getElementById("weatherImage").src = modifiedLink;
           weatherValidTime.innerHTML = `This forecast is valid until ${formattedDate} `;
-          const direction = `${data2.properties.periods[0].windDirection}`;
+          const direction = `${data2.properties.periods[indexNumber].windDirection}`;
           console.log(direction);
-          windForecast.innerHTML = `${data2.properties.periods[0].windSpeed} ${direction}`;
-          temperature.innerHTML = `${data2.properties.periods[0].temperature}°${data2.properties.periods[0].temperatureUnit}`;
-          shortForecast.innerHTML = `${data2.properties.periods[0].shortForecast}`;
-          const dateString2 = `${data2.properties.periods[0].startTime}`;
+          windForecast.innerHTML = `${data2.properties.periods[indexNumber].windSpeed} ${direction}`;
+          temperature.innerHTML = `${data2.properties.periods[indexNumber].temperature}°${data2.properties.periods[0].temperatureUnit}`;
+          shortForecast.innerHTML = `${data2.properties.periods[indexNumber].shortForecast}`;
+          const dateString2 = `${data2.properties.periods[indexNumber].startTime}`;
           const date2 = new Date(dateString2);
           const options2 = {
             year: 'numeric',
@@ -260,11 +242,11 @@ function getHourlyWeather(latitude, longitude) {
           const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
           console.log(formattedDate2);
           forecastFor.innerHTML = `Forecast for ${formattedDate2}`;
-          var temperatureInput = data2.properties.periods[0].temperature;
-          var humidity1 = data2.properties.periods[0].relativeHumidity.value;
+          var temperatureInput = data2.properties.periods[indexNumber].temperature;
+          var humidity1 = data2.properties.periods[indexNumber].relativeHumidity.value;
           var humidity = humidity1 / 100;
-          if (data2.properties.periods[0].probabilityOfPrecipitation.value != null) {
-            rainChanceIcon.innerHTML = `${data2.properties.periods[0].probabilityOfPrecipitation.value}`;
+          if (data2.properties.periods[indexNumber].probabilityOfPrecipitation.value != null) {
+            rainChanceIcon.innerHTML = `${data2.properties.periods[indexNumber].probabilityOfPrecipitation.value}`;
             // rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
           }
           else{
