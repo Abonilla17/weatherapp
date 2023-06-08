@@ -24,7 +24,9 @@
       <h1 id="settings">Settings</h1>
       <label class="useDaily" id="daily">
           <input type="checkbox" name="checkbox" id="useDaily" />
-          Get Hourly forecast
+          Get Hourly forecast <br>
+          <input type="checkbox" name="checkbox" id="resetIndex" />
+          Reset to current weather
       </label><br>
       <button id="showWeather" onclick="getLocation(); off(); showReloadButton();"  type="button" class="btn focus-ring">Get Weather</button><br>
   </div>  
@@ -71,6 +73,11 @@
       <p id="feelsLike"></p>
     </div>
   </div>
+</div>
+<div class="text-center">
+  <h3> Get future forecasts</h3>
+  <select id="futurePeriods"></select>
+  <button onclick="getFutureForecast()">Get future Forecasts </button>
 </div>
   </main>
 </div>
