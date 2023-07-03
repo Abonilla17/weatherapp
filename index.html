@@ -21,13 +21,13 @@
   <![endif]-->
   <div class="container">
     <div class="weatherSettings" id="overlay">
-      <h1 id="settings">Settings</h1>
+      <!-- <h1 id="settings">Settings</h1>
       <label class="useDaily" id="daily">
           <input type="checkbox" name="checkbox" id="useDaily" />
           Get Hourly forecast <br>
           <input type="checkbox" name="checkbox" id="resetIndex" />
           Reset to current weather
-      </label><br>
+      </label><br> -->
       <button id="showWeather" onclick="getLocation(); off(); showReloadButton();"  type="button" class="btn focus-ring">Get Weather</button><br>
   </div>  
   <button onclick="on();" id="reloadWeather" type="button" class="btn btn-link hidden focus-ring">Settings</button>
@@ -74,11 +74,49 @@
     </div>
   </div>
 </div>
-<div class="text-center">
-  <h3> Get future forecasts</h3>
-  <select id="futurePeriods" class="form-select form-select-sm" aria-label=".form-select-sm example"></select>
-  <button class="btn btn-secondary" onclick="getFutureForecast()">Get future Forecasts </button>
+<h3 class="text-center">Hourly forecasts</h3>
+<br>
+<div class="hourlyForecastsContainer">
+  <div class="row">
+    <div class="col" id="col1">
+      <p id="weatherFor1" class="text-center"></p>
+      <img id="weatherImage1">
+      <p id="temperature1" class="text-center"></p>
+      <p id="shortForecast1"></p>
+      <p class="inline" id="rainChanceIcon1" style="font-style:normal;"></p>
+      <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
+      <p id="windForecast1"></p>
+    </div>
+    <div class="col" id="col2">
+      <p id="weatherFor2" class="text-center"></p>
+      <img id="weatherImage2">
+      <br>
+      <p id="temperature2" class="text-center"></p>
+      <p id="shortForecast2"></p>
+      <p class="inline" id="rainChanceIcon2" style="font-style:normal;"></p>
+      <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
+      <p id="windForecast2"></p>
+    </div>
+    <div class="col" id="col3">
+      <p id="weatherFor3" class="text-center"></p>
+      <img id="weatherImage3"> <br>
+      <p id="temperature3" class="text-center"></p>
+      <p id="shortForecast3"></p>
+      <p class="inline" id="rainChanceIcon3" style="font-style:normal;"></p>
+      <i class="fa-solid fa-percent hidden" style="font-weight: normal;"></i>
+      <p id="windForecast3"></p>
+    </div>
+  </div>
 </div>
+<!-- <div class="text-center">
+  <h3> Get future forecasts</h3>
+  <select id="futurePeriods" class="form-select form-select-sm">
+
+  </select>
+  <div class="d-grid gap-2 d-md-block">
+  <button id="getForecasts" class="btn btn-secondary focus-ring" onclick="getFutureForecast()" type="button">Get future Forecasts </button>
+</div>
+</div> -->
   </main>
 </div>
   <script src="scripts.js" async defer></script>
