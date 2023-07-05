@@ -34,9 +34,7 @@ h1{
     font-weight: bolder;
 }
 .weatherContainer{
-    background-color: #F39C12;
     color: black;
-    border: 2px solid #F39C12;
     margin-left: 6%;
     margin-right: 6%;
     margin-bottom: 6%;
@@ -86,6 +84,18 @@ img{
   .col-sm{
     border: 2px solid black;
   }
+  #getForecasts{
+    background-color: #F39C12;
+    border: 2px solid #F39C12;
+    color: black;
+  }
+  #getForecasts:hover{
+    border: 2px solid black;
+  }
+  .hourlyForecastsContainer{
+    line-height: 1;
+  }
+  
 @media screen and (max-width: 550px) {
     .weatherContainer{
         margin: 0%;
