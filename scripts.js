@@ -464,30 +464,27 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
   var reloadBUtton = document.getElementById("reloadWeather");
  reloadBUtton.classList.remove("hidden");
  }
- function off() {
-   document.getElementById("overlay").style.display = "none";
-   document.getElementById("mainContent").style.display = "unset";
-   const weatrherContent = document.getElementById("weatherContent");
-   weatrherContent.classList.remove("hidden");
- }
  function on() {
-  document.getElementById("overlay").style.display = "block";
-  document.getElementById("mainContent").style.display = "none";
-  const buttonShow = document.getElementById("showWeather");
+  const weatherContent = document.getElementById("weatherContent");
+  weatherContent.classList.remove("hidden");
   if(isDarkMode == true)
   {
-    document.getElementById("overlay").style.backgroundColor = "black";
-    document.getElementById("settings").style.color = "white";
-    document.getElementById("daily").style.color = "white";
-    document.getElementById("showWeather").style.color = "white";
-   buttonShow.classList.add("btn-outline-dark");
+    weatherContent.style.backgroundColor = "#1E1E1E";
+    weatherContent.style.border = "2px solid white";
+    weatherContent.style.boxShadow = "0px 13px 28px 8px rgba(255,255,255,1)";
+    weatherContent.style.color = "#FFFFFF";
+    document.body.style.backgroundColor = "#1E1E1E";
+    document.body.style.color = "#FFFFFF";
+   getLocation();
   }
   else{
-    document.getElementById("overlay").style.backgroundColor = "white";
-    document.getElementById("settings").style.color = "black";
-    document.getElementById("daily").style.color = "black";
-    document.getElementById("showWeather").style.color = "black";
-    buttonShow.classList.add("btn-outline-light");
+    weatherContent.style.backgroundColor = "	#e4e5f1";
+    weatherContent.style.border = "2px solid black";
+    weatherContent.style.boxShadow = "0px 13px 28px 8px rgba(0,0,0,1)";
+    weatherContent.style.color = "#333333";
+    document.body.style.backgroundColor = "#d2d3db";
+    document.body.style.color = "#333333";
+        getLocation();
   }
 } 
 function getFutureForecast(){
