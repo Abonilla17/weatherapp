@@ -72,7 +72,8 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       state.innerHTML = ` State = ${data.properties.relativeLocation.properties.state}`;
       
       const weatherAlerts = `https://api.weather.gov/alerts/active?area=${data.properties.relativeLocation.properties.state}`;
-      
+      const cityName = data.properties.relativeLocation.properties.city;
+      console.log(cityName);
       fetch(weatherAlerts)
         .then(response => response.json())
         .then(alertData => {
@@ -89,10 +90,15 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
               alerts.innerHTML = ''; // Clear any existing content before appending new alerts
               for (let i = 0; i < alertData.features.length; i++) {
                 const activeAlerts = alertData.features[i].properties.headline;
+
                 const alertDescription = alertData.features[i].properties.description;
                 const areaDescription = alertData.features[i].properties.areaDesc;
+                if (areaDescription.includes(cityName)) {
+                  alerts.innerHTML += `Applicable to: ${cityName}<br>`;
+                } else {
+                  alerts.style.display = "none";
+                }
                 alerts.innerHTML += activeAlerts + `<br>`;
-                alerts.innerHTML += `Applicable to: ` + areaDescription + `<br>`;
                 alerts.innerHTML += alertDescription + `<br>`;
                 alerts.classList.add('alert');
                 alerts.classList.add('alert-info');        
