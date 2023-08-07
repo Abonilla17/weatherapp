@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/weather-icons.css">
 </head>
 
-<body onload="on();"style="margin-top:3%;">
+<body id="body" onload="on();"style="margin-top:3%;">
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -35,6 +35,8 @@
     <h1 class="centered alertTitle hidden" id="alertTitle">Active Weather Alerts:</h1>
     <p id="city" class="text-center"></p>
     <p id="state" class="text-center"></p>
+    <div id="noAlerts" role="alert" class="text-center"></div>
+    <div id="inApplicable" role="alert" class="text-center"></div>
     <div id="weatherAlerts" class="text-center" role="alert"></div>
     <div class="text-center weatherContainer hidden" id="weatherContent">
       <p id="observationInformation" class="text-center" ></p>
