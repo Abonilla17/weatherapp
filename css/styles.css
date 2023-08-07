@@ -1,5 +1,8 @@
  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-main{
+body{
+  display: none;
+}
+ main{
     color-scheme: light dark;
 }
 #overlay {
@@ -95,7 +98,9 @@ img{
   .hourlyForecastsContainer{
     line-height: 1;
   }
-  
+  .bold{
+    font-weight: bold;
+  }
 @media screen and (max-width: 550px) {
     .weatherContainer{
         margin: 0%;

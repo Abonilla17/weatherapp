@@ -2,6 +2,7 @@
 let latitude;
 let longitude;
 const alertTitle = document.getElementById("alertTitle");
+const body = document.getElementById("body");
 const pictureSize = "medium";
 var temperatureInput= "";
 var humidity1 = "";
@@ -11,41 +12,48 @@ const rainChanceIcon = document.getElementById("rainChanceIcon");
 const windForecast = document.getElementById("windForecast");
 const windDirection = document.getElementById("windDirection");
 let indexNumber = 0;
-function getLocation(){
+function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      // Callback function to handle successful retrieval of location data
-      latitude = position.coords.latitude;
-      longitude = position.coords.longitude;
-      alertTitle.style.display = "block";
-      // Call getWeather function after the location is retrieved
-      // if (document.getElementById('useDaily').checked) {
-      //   if (document.getElementById('resetIndex').checked) {
-      //     console.log('index reset');
-      //     indexNumber = "0";
-      //   }
-      //   getHourlyWeather(latitude, longitude);
-      //   console.log('Called hourly weather');
-      // } else {
-      //   if (document.getElementById('resetIndex').checked) {
-      //     console.log('index reset');
-      //     indexNumber = "0";
-      //   }
-      //   getWeather(latitude, longitude);
-      //   console.log('Called default weather');
-      // }
-        getWeather(latitude,longitude);
-        getHourlyWeather(latitude,longitude);
-        getHourlyWeather2(latitude,longitude);
-        getHourlyWeather3(latitude,longitude);
-    }, function() {
-      // Callback function to handle errors
-      alert(`Unable to retrieve location`);
-    });
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        // Callback function to handle successful retrieval of location data
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const alertTitle = document.getElementById("alertTitle");
+        if (alertTitle) {
+          alertTitle.style.display = "block";
+        }
+        // Now call the weather functions with the obtained latitude and longitude
+        getWeather(latitude, longitude);
+        getHourlyWeather(latitude, longitude);
+        getHourlyWeather2(latitude, longitude);
+        getHourlyWeather3(latitude, longitude);
+        body.style.display = "block";
+      },
+      function(error) {
+        // Callback function to handle errors
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            alert(`User denied the geolocation request.`);
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert(`Location information is unavailable.`);
+            alert(`This may be because you have denied location access in your operating system settings.`);
+            break;
+          case error.TIMEOUT:
+            alert(`The request to get user location timed out.`);
+            break;
+          default:
+            alert(`An unknown error occurred.`);
+            break;
+        }
+      }
+    );
   } else {
-    alert(`Geolocation is not supported by this browser`);
+    alert(`Geolocation is not supported by this browser.`);
   }
 }
+
 
 // Fetch the weather data based on the latitude and longitude
 function getWeather(latitude, longitude) {
@@ -61,6 +69,8 @@ const shortForecast = document.getElementById("shortForecast");
 const weatherValidTime = document.getElementById("weatherValidTime");
 const forecastFor = document.getElementById("weatherFor");
 const feelsLIke = document.getElementById(`feelsLike`);
+const noAlerts = document.getElementById('noAlerts');
+const inApplicable = document.getElementById('inApplicable');
 let iconImage = "";
 const futureForecast = document.getElementById("futurePeriods");
 const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
@@ -72,8 +82,10 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       state.innerHTML = ` State = ${data.properties.relativeLocation.properties.state}`;
       
       const weatherAlerts = `https://api.weather.gov/alerts/active?area=${data.properties.relativeLocation.properties.state}`;
-      const cityName = data.properties.relativeLocation.properties.city;
+   //   const cityName = 'Big Island Summit';
+   const cityName = data.properties.relativeLocation.properties.city;
       console.log(cityName);
+      console.log(weatherAlerts);
       fetch(weatherAlerts)
         .then(response => response.json())
         .then(alertData => {
@@ -90,16 +102,18 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
               alerts.innerHTML = ''; // Clear any existing content before appending new alerts
               for (let i = 0; i < alertData.features.length; i++) {
                 const activeAlerts = alertData.features[i].properties.headline;
-
+                
                 const alertDescription = alertData.features[i].properties.description;
                 const areaDescription = alertData.features[i].properties.areaDesc;
                 if (areaDescription.includes(cityName)) {
-                  alerts.innerHTML += `Applicable to: ${cityName}<br>`;
+                  alerts.innerHTML += `This weather alert is applicable to you in: ${cityName}<br>`;
                 } else {
-                  alerts.style.display = "none";
+                  alerts.innerHTML += `This weather alert is inapplicable to you in  ${cityName}<br>`;
                 }
                 alerts.innerHTML += activeAlerts + `<br>`;
+                alerts.innerHTML += `Applicable to ${areaDescription}  <br>`;
                 alerts.innerHTML += alertDescription + `<br>`;
+                alerts.innerHTML += `<br>`;
                 alerts.classList.add('alert');
                 alerts.classList.add('alert-info');        
               }
@@ -477,7 +491,7 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
   {
     weatherContent.style.backgroundColor = "#1E1E1E";
     weatherContent.style.border = "2px solid white";
-    weatherContent.style.boxShadow = "0px 13px 28px 8px rgba(255,255,255,1)";
+    weatherContent.style.boxShadow = "10px 10px 100px -11px rgba(189,187,189,1)";
     weatherContent.style.color = "#FFFFFF";
     document.body.style.backgroundColor = "#1E1E1E";
     document.body.style.color = "#FFFFFF";
@@ -486,7 +500,7 @@ function calculateFeelsLikeTemperature(temperatureF, humidity) {
   else{
     weatherContent.style.backgroundColor = "	#e4e5f1";
     weatherContent.style.border = "2px solid black";
-    weatherContent.style.boxShadow = "0px 13px 28px 8px rgba(0,0,0,1)";
+    weatherContent.style.boxShadow = "10px 10px 100px 0px rgba(0,0,0,0.75)";
     weatherContent.style.color = "#333333";
     document.body.style.backgroundColor = "#d2d3db";
     document.body.style.color = "#333333";
