@@ -14,7 +14,24 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/weather-icons.css">
 </head>
+<script>
+  // Add an event listener to capture all network requests
+window.addEventListener('fetch', event => {
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        if (response.status === 500) {
+          location.reload(); // Reload the page
+        }
+        return response;
+      })
+      .catch(error => {
+        console.error('Fetch Error:', error);
+      })
+  );
+});
 
+</script>
 <body id="body" onload="on();"style="margin-top:3%;">
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
