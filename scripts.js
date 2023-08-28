@@ -56,7 +56,7 @@ function getLocation() {
 
 
 // Fetch the weather data based on the latitude and longitude
-function getWeather(latitude, longitude) {
+ async function getWeather(latitude, longitude) {
   const weatherForecast = document.getElementById("weather");
 const city = document.getElementById("city");
 const state = document.getElementById("state");
@@ -286,7 +286,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
         });
     });
 }
-function getHourlyWeather2(latitude, longitude) {
+function  getHourlyWeather2(latitude, longitude) {
   indexNumber2 = indexNumber + 2;
   console.log(indexNumber2);
   const weatherForecast = document.getElementById("weather");
