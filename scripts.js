@@ -56,7 +56,7 @@ function getLocation() {
 
 
 // Fetch the weather data based on the latitude and longitude
- async function getWeather(latitude, longitude) {
+ function getWeather(latitude, longitude) {
   const weatherForecast = document.getElementById("weather");
 const city = document.getElementById("city");
 const state = document.getElementById("state");
@@ -75,116 +75,123 @@ let iconImage = "";
 const futureForecast = document.getElementById("futurePeriods");
 const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      city.innerHTML = ` City = ${data.properties.relativeLocation.properties.city}`;
-      state.innerHTML = ` State = ${data.properties.relativeLocation.properties.state}`;
-      
-      const weatherAlerts = `https://api.weather.gov/alerts/active?area=${data.properties.relativeLocation.properties.state}`;
-   //   const cityName = 'Big Island Summit';
-   const cityName = data.properties.relativeLocation.properties.city;
-      console.log(cityName);
-      console.log(weatherAlerts);
-      fetch(weatherAlerts)
-        .then(response => response.json())
-        .then(alertData => {
-          console.log(alertData);
-          const alertTime = alertData.updated;
-          console.log(alertTime);
-          const correctTime = new Date(alertTime);
-          const readableDateTime = correctTime.toISOString();
-          console.log(readableDateTime);
-          alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
-          console.log(alertData.features.length);
-          if(alertData.features.length > 0 && alertData.features[indexNumber].properties.headline != undefined) {
-            if (alertData.features.length > 0) {
-              alerts.innerHTML = ''; // Clear any existing content before appending new alerts
-              for (let i = 0; i < alertData.features.length; i++) {
-                const activeAlerts = alertData.features[i].properties.headline;
-                
-                const alertDescription = alertData.features[i].properties.description;
-                const areaDescription = alertData.features[i].properties.areaDesc;
-                if (areaDescription.includes(cityName)) {
-                  alerts.innerHTML += `This weather alert is applicable to you in: ${cityName}<br>`;
-                } else {
-                  alerts.innerHTML += `This weather alert is inapplicable to you in  ${cityName}<br>`;
-                }
-                alerts.innerHTML += activeAlerts + `<br>`;
-                alerts.innerHTML += `Applicable to ${areaDescription}  <br>`;
-                alerts.innerHTML += alertDescription + `<br>`;
-                alerts.innerHTML += `<br>`;
-                alerts.classList.add('alert');
-                alerts.classList.add('alert-info');        
-              }
-            } else {
-              alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
-            }
-          }            
-        });
-        
-      fetch(data.properties.forecast)
-        .then(response => response.json())
-        .then(data2 => {
-          console.log(data2);
-          console.log(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value);
-           const isDaytime = data2.properties.periods[indexNumber].isDaytime;
-           console.log(data2.properties.periods[indexNumber].isDaytime)
-           const futurePeriodsLength = data2.properties.periods.length;
-          console.log(futurePeriodsLength);
-          const dateString = `${data2.properties.periods[indexNumber].endTime}`;
-          const date = new Date(dateString);
-          const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-            const formattedDate = date.toLocaleString(undefined, options);
-            console.log(formattedDate);
-            console.log(data2.properties.periods[indexNumber].icon);
-          weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
-          const direction = `${data2.properties.periods[indexNumber].windDirection}`;
-          console.log(direction);
-          windForecast.innerHTML = `${data2.properties.periods[indexNumber].windSpeed} ${direction}`;
-          temperature.innerHTML = `${data2.properties.periods[indexNumber].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
-          shortForecast.innerHTML = `${data2.properties.periods[indexNumber].shortForecast}`;
-          document.getElementById(`weatherImage`).src = `${data2.properties.periods[0].icon}`;
-          const dateString2 = `${data2.properties.periods[indexNumber].startTime}`;
-          const date2 = new Date(dateString2);
-          const options2 = {hour: 'numeric', minute: 'numeric'};
-            const formattedDate2 = date2.toLocaleString(undefined, options2);
-            console.log(formattedDate2);
-          forecastFor.innerHTML = `${data2.properties.periods[indexNumber].name}'s forecast`;
-          var temperatureInput = data2.properties.periods[indexNumber].temperature;
-          var humidity1 = data2.properties.periods[indexNumber].relativeHumidity.value;
-          var humidity = humidity1 / 100;
-          if(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value != null)
-          {
-            rainChanceIcon.innerHTML = `${data2.properties.periods[indexNumber].probabilityOfPrecipitation.value}`;
-            // rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
-          }
-          else{
-            rainChanceIcon.innerHTML = `0`;
-          }
-          var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
-          console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
-          feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
-          // futureForecast.innerHTML = "";
-          // for (let i = 0; i < futurePeriodsLength; i++) {
-          //     const dateStart = data2.properties.periods[i].startTime;
-          //   const date2 = new Date(dateStart);
-          //   const options2 = {
-          //     month: 'long',
-          //     day: 'numeric',
-          //     hour: 'numeric',
-          //     minute: 'numeric'
-          //   };
-          //   const options = data2.properties.periods[i].name;
-          //   const option = document.createElement("option");
-          //   option.text = options;
-          //   option.value = i;
-          //   futureForecast.appendChild(option);
-          // }
-        });
-    });
-    console.log(indexNumber)
-}
+  .then(response => {
+    console.log(`Api response code is ` +  response.status);
+    if (response.status === 500) {
+      alert('page will reload to hopefully fix error');
+      location.reload();
+      throw new Error('Internal Server Error');
+    }    
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    city.innerHTML = ` City = ${data.properties.relativeLocation.properties.city}`;
+    state.innerHTML = ` State = ${data.properties.relativeLocation.properties.state}`;
+    const weatherAlerts = `https://api.weather.gov/alerts/active?area=${data.properties.relativeLocation.properties.state}`;
+    //   const cityName = 'Big Island Summit';
+    const cityName = data.properties.relativeLocation.properties.city;
+       console.log(cityName);
+       console.log(weatherAlerts);
+       fetch(weatherAlerts)
+       .then(response => {
+        console.log(`Api response code is ` +  response.status);
+        if (response.status === 500) {
+          alert('page will reload to hopefully fix error');
+          location.reload();
+          throw new Error('Internal Server Error');
+        }    
+        return response.json();
+      })
+         .then(alertData => {
+           console.log(alertData);
+           const alertTime = alertData.updated;
+           console.log(alertTime);
+           const correctTime = new Date(alertTime);
+           const readableDateTime = correctTime.toISOString();
+           console.log(readableDateTime);
+           alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
+           console.log(alertData.features.length);
+           if(alertData.features.length > 0 && alertData.features[indexNumber].properties.headline != undefined) {
+             if (alertData.features.length > 0) {
+               alerts.innerHTML = ''; // Clear any existing content before appending new alerts
+               for (let i = 0; i < alertData.features.length; i++) {
+                 const activeAlerts = alertData.features[i].properties.headline;
+                 
+                 const alertDescription = alertData.features[i].properties.description;
+                 const areaDescription = alertData.features[i].properties.areaDesc;
+                 if (areaDescription.includes(cityName)) {
+                   alerts.innerHTML += `This weather alert is applicable to you in: ${cityName}<br>`;
+                 } else {
+                   alerts.innerHTML += `This weather alert is inapplicable to you in  ${cityName}<br>`;
+                 }
+                 alerts.innerHTML += activeAlerts + `<br>`;
+                 alerts.innerHTML += `Applicable to ${areaDescription}  <br>`;
+                 alerts.innerHTML += alertDescription + `<br>`;
+                 alerts.innerHTML += `<br>`;
+                 alerts.classList.add('alert');
+                 alerts.classList.add('alert-info');        
+               }
+             } else {
+               alerts.innerHTML = `There are currently no active weather alerts as of ${correctTime}`;
+             }
+           }            
+         });
+         fetch(data.properties.forecast)
+         .then(response => {
+          console.log(`Api response code is ` +  response.status);
+          if (response.status === 500) {
+            alert('page will reload to hopefully fix error');
+            location.reload();
+            throw new Error('Internal Server Error');
+          }    
+          return response.json();
+        })
+         .then(data2 => {
+           console.log(data2);
+           console.log(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value);
+            const isDaytime = data2.properties.periods[indexNumber].isDaytime;
+            console.log(data2.properties.periods[indexNumber].isDaytime)
+            const futurePeriodsLength = data2.properties.periods.length;
+           console.log(futurePeriodsLength);
+           const dateString = `${data2.properties.periods[indexNumber].endTime}`;
+           const date = new Date(dateString);
+           const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+             const formattedDate = date.toLocaleString(undefined, options);
+             console.log(formattedDate);
+             console.log(data2.properties.periods[indexNumber].icon);
+           weatherValidTime.innerHTML = `This forecest is valid until ${formattedDate} `;
+           const direction = `${data2.properties.periods[indexNumber].windDirection}`;
+           console.log(direction);
+           windForecast.innerHTML = `${data2.properties.periods[indexNumber].windSpeed} ${direction}`;
+           temperature.innerHTML = `${data2.properties.periods[indexNumber].temperature}°${data2.properties.periods[0].temperatureUnit}` ;
+           shortForecast.innerHTML = `${data2.properties.periods[indexNumber].shortForecast}`;
+           document.getElementById(`weatherImage`).src = `${data2.properties.periods[0].icon}`;
+           const dateString2 = `${data2.properties.periods[indexNumber].startTime}`;
+           const date2 = new Date(dateString2);
+           const options2 = {hour: 'numeric', minute: 'numeric'};
+             const formattedDate2 = date2.toLocaleString(undefined, options2);
+             console.log(formattedDate2);
+           forecastFor.innerHTML = `${data2.properties.periods[indexNumber].name}'s forecast`;
+           var temperatureInput = data2.properties.periods[indexNumber].temperature;
+           var humidity1 = data2.properties.periods[indexNumber].relativeHumidity.value;
+           var humidity = humidity1 / 100;
+           if(data2.properties.periods[indexNumber].probabilityOfPrecipitation.value != null)
+           {
+             rainChanceIcon.innerHTML = `${data2.properties.periods[indexNumber].probabilityOfPrecipitation.value}`;
+             // rainChanceIcon.classList.add(`fa-${data2.properties.periods[0].probabilityOfPrecipitation.value}`);
+           }
+           else{
+             rainChanceIcon.innerHTML = `0`;
+           }
+           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
+           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
+           feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
+ 
+         });
+     });
+     console.log(indexNumber)
+    }
 
 // Function to calculate the feels like temperature based on relative humidity
 function calculateFeelsLikeTemperature(temperatureF, humidity) {
@@ -217,11 +224,27 @@ const windForecast = document.getElementById("windForecast1");
 let iconImage = "";
 const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
-    .then((response) => response.json())
+  .then(response => {
+    console.log(`Api response code is ` +  response.status);
+    if (response.status === 500) {
+      alert('page will reload to hopefully fix error');
+      location.reload();
+      throw new Error('Internal Server Error');
+    }    
+    return response.json();
+  })
     .then((data) => {
       console.log(data);
       fetch(data.properties.forecastHourly)
-        .then((response) => response.json())
+      .then(response => {
+        console.log(`Api response code is ` +  response.status);
+        if (response.status === 500) {
+          alert('page will reload to hopefully fix error');
+          location.reload();
+          throw new Error('Internal Server Error');
+        }    
+        return response.json();
+      })
         .then((data2) => {
           console.log(data2);
           const dateString = `${data2.properties.periods[indexNumber1].endTime}`;
@@ -265,24 +288,6 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
           feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
-          // futureForecast.innerHTML = "";
-          // for (let i = 0; i < futurePeriodsLength; i++) {
-          //   const dateStart = data2.properties.periods[i].startTime;
-          //   const date2 = new Date(dateStart);
-          //   const options2 = {
-          //     month: 'long',
-          //     day: 'numeric',
-          //     hour: 'numeric',
-          //     minute: 'numeric'
-          //   };
-          //   const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
-          //   console.log(formattedDate2);
-          //   const options = `Forecast for ${formattedDate2}`;
-          //   const option = document.createElement("option");
-          //   option.text = options;
-          //   option.value = i;
-          //   futureForecast.appendChild(option);
-          // }
         });
     });
 }
@@ -305,11 +310,27 @@ let iconImage = "";
 const futureForecast = document.getElementById("futurePeriods");
 const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
-    .then((response) => response.json())
+  .then(response => {
+    console.log(`Api response code is ` +  response.status);
+    if (response.status === 500) {
+      alert('page will reload to hopefully fix error');
+      location.reload();
+      throw new Error('Internal Server Error');
+    }    
+    return response.json();
+  })
     .then((data) => {
       console.log(data);
       fetch(data.properties.forecastHourly)
-        .then((response) => response.json())
+      .then(response => {
+        console.log(`Api response code is ` +  response.status);
+        if (response.status === 500) {
+          alert('page will reload to hopefully fix error');
+          location.reload();
+          throw new Error('Internal Server Error');
+        }    
+        return response.json();
+      })
         .then((data2) => {
           console.log(data2);
           const dateString = `${data2.properties.periods[indexNumber2].endTime}`;
@@ -352,24 +373,6 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
           feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
-          // futureForecast.innerHTML = "";
-          // for (let i = 0; i < futurePeriodsLength; i++) {
-          //   const dateStart = data2.properties.periods[i].startTime;
-          //   const date2 = new Date(dateStart);
-          //   const options2 = {
-          //     month: 'long',
-          //     day: 'numeric',
-          //     hour: 'numeric',
-          //     minute: 'numeric'
-          //   };
-          //   const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
-          //   console.log(formattedDate2);
-          //   const options = `Forecast for ${formattedDate2}`;
-          //   const option = document.createElement("option");
-          //   option.text = options;
-          //   option.value = i;
-          //   futureForecast.appendChild(option);
-          // }
         });
     });
 }
@@ -393,11 +396,27 @@ let iconImage = "";
 const futureForecast = document.getElementById("futurePeriods");
 const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
-    .then((response) => response.json())
+  .then(response => {
+    console.log(`Api response code is ` +  response.status);
+    if (response.status === 500) {
+      alert('page will reload to hopefully fix error');
+      location.reload();
+      throw new Error('Internal Server Error');
+    }    
+    return response.json();
+  })
     .then((data) => {
       console.log(data);
       fetch(data.properties.forecastHourly)
-        .then((response) => response.json())
+      .then(response => {
+        console.log(`Api response code is ` +  response.status);
+        if (response.status === 500) {
+          alert('page will reload to hopefully fix error');
+          location.reload();
+          throw new Error('Internal Server Error');
+        }    
+        return response.json();
+      })
         .then((data2) => {
           console.log(data2);
           const dateString = `${data2.properties.periods[indexNumber3].endTime}`;
@@ -441,24 +460,6 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
           var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
           console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
           feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
-          // futureForecast.innerHTML = "";
-          // for (let i = 0; i < futurePeriodsLength; i++) {
-          //   const dateStart = data2.properties.periods[i].startTime;
-          //   const date2 = new Date(dateStart);
-          //   const options2 = {
-          //     month: 'long',
-          //     day: 'numeric',
-          //     hour: 'numeric',
-          //     minute: 'numeric'
-          //   };
-          //   const formattedDate2 = date2.toLocaleString(undefined, options2).replace(',', ',');
-          //   console.log(formattedDate2);
-          //   const options = `Forecast for ${formattedDate2}`;
-          //   const option = document.createElement("option");
-          //   option.text = options;
-          //   option.value = i;
-          //   futureForecast.appendChild(option);
-          // }
         });
     });
 }
