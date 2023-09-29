@@ -73,13 +73,13 @@ const noAlerts = document.getElementById('noAlerts');
 const inApplicable = document.getElementById('inApplicable');
 let iconImage = "";
 const futureForecast = document.getElementById("futurePeriods");
+const feelsLikeCalculationElement = document.getElementById("feelsLikeCalculation");
 const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
   .then(response => {
     console.log(`Api response code is ` +  response.status);
     if (response.status === 500) {
-      alert('page will reload to hopefully fix error');
-      location.reload();
+      getWeather(latitude, longitude);
       throw new Error('Internal Server Error');
     }    
     return response.json();
@@ -97,8 +97,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
        .then(response => {
         console.log(`Api response code is ` +  response.status);
         if (response.status === 500) {
-          alert('page will reload to hopefully fix error');
-          location.reload();
+          getWeather(latitude, longitude);
           throw new Error('Internal Server Error');
         }    
         return response.json();
@@ -141,8 +140,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
          .then(response => {
           console.log(`Api response code is ` +  response.status);
           if (response.status === 500) {
-            alert('page will reload to hopefully fix error');
-            location.reload();
+            getWeather(latitude, longitude);
             throw new Error('Internal Server Error');
           }    
           return response.json();
@@ -187,8 +185,12 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
            var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
            console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
            feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
- 
-         });
+           const unit = data2.properties.periods[0].temperatureUnit;
+           const humdiityPercentage = humidity *100;
+           const feelsLikeCalculation = "*Feels like temperature is calculated using: " + "the temperature which is  " + temperatureInput + "°" + unit + " and relative humidity which is:  "  +  humdiityPercentage + "%" ;
+           feelsLikeCalculationElement.innerHTML = feelsLikeCalculation;
+          console.log(feelsLikeCalculation);
+         });  
      });
      console.log(indexNumber)
     }
@@ -227,8 +229,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   .then(response => {
     console.log(`Api response code is ` +  response.status);
     if (response.status === 500) {
-      alert('page will reload to hopefully fix error');
-      location.reload();
+      getHourlyWeather(latitude, longitude)
       throw new Error('Internal Server Error');
     }    
     return response.json();
@@ -239,8 +240,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       .then(response => {
         console.log(`Api response code is ` +  response.status);
         if (response.status === 500) {
-          alert('page will reload to hopefully fix error');
-          location.reload();
+          getHourlyWeather(latitude, longitude)
           throw new Error('Internal Server Error');
         }    
         return response.json();
@@ -285,9 +285,6 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
           else{
             rainChanceIcon.innerHTML = `0`;
           }
-          var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
-          console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
-          feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
         });
     });
 }
@@ -313,8 +310,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   .then(response => {
     console.log(`Api response code is ` +  response.status);
     if (response.status === 500) {
-      alert('page will reload to hopefully fix error');
-      location.reload();
+      getHourlyWeather2(latitude, longitude)
       throw new Error('Internal Server Error');
     }    
     return response.json();
@@ -325,8 +321,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       .then(response => {
         console.log(`Api response code is ` +  response.status);
         if (response.status === 500) {
-          alert('page will reload to hopefully fix error');
-          location.reload();
+          getHourlyWeather2(latitude, longitude)
           throw new Error('Internal Server Error');
         }    
         return response.json();
@@ -370,9 +365,6 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
           else{
             rainChanceIcon.innerHTML = `0`;
           }
-          var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
-          console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
-          feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
         });
     });
 }
@@ -399,8 +391,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   .then(response => {
     console.log(`Api response code is ` +  response.status);
     if (response.status === 500) {
-      alert('page will reload to hopefully fix error');
-      location.reload();
+      getHourlyWeather3(latitude, longitude);
       throw new Error('Internal Server Error');
     }    
     return response.json();
@@ -411,8 +402,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       .then(response => {
         console.log(`Api response code is ` +  response.status);
         if (response.status === 500) {
-          alert('page will reload to hopefully fix error');
-          location.reload();
+          getHourlyWeather3(latitude, longitude);
           throw new Error('Internal Server Error');
         }    
         return response.json();
@@ -457,24 +447,8 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
           else{
             rainChanceIcon.innerHTML = `0`;
           }
-          var feelsLikeTemperature = calculateFeelsLikeTemperature(temperatureInput, humidity);
-          console.log("Feels like temperature: " + feelsLikeTemperature.toFixed(0) + "°F");
-          feelsLIke.innerHTML = feelsLikeTemperature.toFixed(0) + "°F";
         });
     });
-}
-
-// Function to calculate the feels like temperature based on relative humidity
-function calculateFeelsLikeTemperature(temperatureF, humidity) {
-  // Calculate the feels like temperature
-  var feelsLikeTemperature =
-    temperatureF +
-    0.33 * humidity -
-    0.70 * Math.pow(10, -3) * Math.pow(temperatureF, 2) -
-    4.00 * Math.pow(10, -6) * Math.pow(humidity, 2) +
-    0.75 * Math.pow(10, -3) * Math.pow(temperatureF, 2) * humidity;
-
-  return feelsLikeTemperature;
 }
 
  function removeBorder() {
