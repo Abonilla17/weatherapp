@@ -78,7 +78,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
   .then(response => {
     console.log(`Api response code is ` +  response.status);
-    if (response.status === 500) {
+    if (!response.ok ) {
       getWeather(latitude, longitude);
       throw new Error('Internal Server Error');
     }    
@@ -96,7 +96,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
        fetch(weatherAlerts)
        .then(response => {
         console.log(`Api response code is ` +  response.status);
-        if (response.status === 500) {
+        if (!response.ok ) {
           getWeather(latitude, longitude);
           throw new Error('Internal Server Error');
         }    
@@ -139,7 +139,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
          fetch(data.properties.forecast)
          .then(response => {
           console.log(`Api response code is ` +  response.status);
-          if (response.status === 500) {
+          if (!response.ok ) {
             getWeather(latitude, longitude);
             throw new Error('Internal Server Error');
           }    
@@ -228,7 +228,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
   .then(response => {
     console.log(`Api response code is ` +  response.status);
-    if (response.status === 500) {
+    if (!response.ok ) {
       getHourlyWeather(latitude, longitude)
       throw new Error('Internal Server Error');
     }    
@@ -239,7 +239,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       fetch(data.properties.forecastHourly)
       .then(response => {
         console.log(`Api response code is ` +  response.status);
-        if (response.status === 500) {
+        if (!response.ok ) {
           getHourlyWeather(latitude, longitude)
           throw new Error('Internal Server Error');
         }    
@@ -309,7 +309,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
   .then(response => {
     console.log(`Api response code is ` +  response.status);
-    if (response.status === 500) {
+    if (!response.ok ) {
       getHourlyWeather2(latitude, longitude)
       throw new Error('Internal Server Error');
     }    
@@ -320,7 +320,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       fetch(data.properties.forecastHourly)
       .then(response => {
         console.log(`Api response code is ` +  response.status);
-        if (response.status === 500) {
+        if (!response.ok ) {
           getHourlyWeather2(latitude, longitude)
           throw new Error('Internal Server Error');
         }    
@@ -390,7 +390,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
   fetch(weatherdata)
   .then(response => {
     console.log(`Api response code is ` +  response.status);
-    if (response.status === 500) {
+    if (!response.ok ) {
       getHourlyWeather3(latitude, longitude);
       throw new Error('Internal Server Error');
     }    
@@ -401,7 +401,7 @@ const weatherdata = `https://api.weather.gov/points/${latitude},${longitude}`;
       fetch(data.properties.forecastHourly)
       .then(response => {
         console.log(`Api response code is ` +  response.status);
-        if (response.status === 500) {
+        if (!response.ok ) {
           getHourlyWeather3(latitude, longitude);
           throw new Error('Internal Server Error');
         }    
